@@ -1,8 +1,8 @@
-# eval_harness
+# cat-alogue
 
 Adaptive trajectory prediction. It scores any predictor against ground truth across the three axes: measurement noise, prediction horizon, and motion regime; benchmarks a learned model against a fixed baseline, and produces the figures + summary used in the report.
 
-Companion to the data pipeline (`cat-apult`) and the training repo (`cat_walk`).
+Companion to the data pipeline (`cat-apult`) and the training repo (`cat-walk`).
 
 ---
 
