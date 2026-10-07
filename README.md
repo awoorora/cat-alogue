@@ -10,8 +10,8 @@ Companion to the data pipeline (`cat-apult`) and the training repo (`cat-walk`).
 
 Two predictors, run through identical code so their numbers are directly comparable:
 
-- **Baseline (Kalman)** — a constant-velocity Kalman filter (`kalman_filter/catman.py`). The "simple fixed-model baseline" the challenge asks us to beat.
-- **ML Model (LSTM)** — the trained sequence model `instinct_v2.keras`, wrapped in `machine_learning/predictor_lstm.py`.
+- **Baseline (Kalman)** - a constant-velocity Kalman filter (`kalman_filter/catman.py`). The "simple fixed-model baseline" the challenge asks us to beat.
+- **ML Model (LSTM)** - the trained sequence model `instinct_v2.keras`, wrapped in `machine_learning/predictor_lstm.py`.
 
 Both expose the same two-method interface, so swapping models is a one-line change:
 
@@ -26,10 +26,10 @@ Each also provides a batched `predict_batch` / `estimate_state_batch` that the h
 
 ## Metrics
 
-The primary metric is **mean Euclidean position error in metres** — the standard trajectory-forecasting pair:
+The primary metric is **mean Euclidean position error in metres** - the standard trajectory-forecasting pair:
 
-- **ADE** (Average Displacement Error): mean error over the whole predicted horizon and all windows — overall accuracy in one number.
-- **FDE** (Final Displacement Error): error at the furthest horizon — how far the prediction has drifted by the end.
+- **ADE** (Average Displacement Error): mean error over the whole predicted horizon and all windows - overall accuracy in one number.
+- **FDE** (Final Displacement Error): error at the furthest horizon - how far the prediction has drifted by the end.
 
 A velocity-estimation error (via `estimate_state`) is reported alongside, and a trajectory "corridor IoU" is kept only as a secondary sanity number.
 
@@ -57,7 +57,7 @@ It loads `dataset/test.npz`, runs all three sweeps for both predictors, prints a
 
 Regimes: `CV` (constant velocity), `CA` (accelerating/braking), `CT` (coordinated turn), `MIX` (accelerating through a turn / transition).
 
-**Reading the results:** the learned model's advantage is concentrated where the challenge cares — the harder regimes (`CT`, `MIX`) and robustness as noise grows — while the Kalman is near-optimal on simple constant-velocity motion (it *is* a constant-velocity model). See the report for the full interpretation.
+**Reading the results:** the learned model's advantage is concentrated where the challenge cares - the harder regimes (`CT`, `MIX`) and robustness as noise grows - while the Kalman is near-optimal on simple constant-velocity motion (it *is* a constant-velocity model). See the report for the full interpretation.
 
 > The LSTM was trained on measurement noise σ ∈ [0, 2] m. Sweep points at σ = 4 and 8 m are therefore **out of distribution** (extrapolation) and are shaded red on the noise plots. Read those points as robustness beyond spec, not in-distribution accuracy.
 
@@ -81,6 +81,6 @@ evaluation_plots/                   # generated figures (regenerated on each run
 
 ### Notes
 
-- `catman.py` exports the aliases `Catman` / `Kitten` for `KalmanBaseline` — cosmetic, harmless.
+- `catman.py` exports the aliases `Catman` / `Kitten` for `KalmanBaseline` - cosmetic, harmless.
 - The dataset stores **clean** positions; the harness adds measurement noise at runtime with a fixed seed, so every predictor faces identical noise at each σ (fair comparison), and the noise sweep is trivial.
 - The Kalman's measurement-noise `R` is set to the actual sweep σ at each point, so it is a properly-tuned (strong, honest) baseline rather than a mistuned one.
